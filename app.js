@@ -26,7 +26,7 @@ yargs.command({
             type:'string'
         }
     },
-    handler: function(argv){
+    handler(argv){
         utilities.addNote(argv.title, argv.body)
         //log(chalk.green.bold('Adding a new note'),argv)
         //log(chalk.green.bold('\nNote Title:'),argv.title,chalk.green.bold('\nText Body:'),argv.body,'\n')
@@ -45,7 +45,7 @@ yargs.command({
             type:'string'
         }
     },
-    handler: function(argv){
+    handler(argv){
         utilities.removeNote(argv.title)
         //log(chalk.red.bold('Removing a note'))
     }
@@ -56,7 +56,7 @@ yargs.command({
 yargs.command({
     command:'list',
     describe:'Show List of Notes',
-    handler: function(){
+    handler(){
         log(chalk.cyan.bold('displaying list of notes'))
     }
 })
@@ -66,7 +66,7 @@ yargs.command({
 yargs.command({
     command:'read',
     describe:'Reading a note',
-    handler: function(){
+    handler(){
         log(chalk.blue.bold('Reading a note from list'))
     }
 })
