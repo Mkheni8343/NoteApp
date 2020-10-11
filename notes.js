@@ -1,16 +1,15 @@
 const chalk = require('chalk')
 const fs = require('fs')
-
-const getNotes = () => {
-    'Your notes are ...'
-} 
+const { title } = require('process')
 
 const addNote = (title,body) => {
     const notes = loadNotes()
 
-    const duplicateNotes = notes.filter((note) => note.title === title)
+    //const duplicateNotes = notes.filter((note) => note.title === title)
+    const duplicateNote = notes.find((note) => note.title === title)
 
-    if(duplicateNotes.length === 0 ){
+    // if(duplicateNotes.length === 0 ){
+    if(!duplicateNote){
         notes.push({
             title:title,
             body:body
@@ -47,13 +46,35 @@ const loadNotes  = () => {
     }
 }
 
+const listNotes = () => {
+    const notes = loadNotes()
+    console.log(chalk.cyan.bold('\n *** Displaying list of notes *** \n'))
+    notes.forEach((note) => {
+        console.log(chalk.green.bold(note.title))
+    });
+}
 const saveNotes = (notes) => {
     const dataJSON = JSON.stringify(notes)
     fs.writeFileSync('userNotes.json',dataJSON)
 }
 
+const readNote = (title) => {
+    const notes = loadNotes()
+    const storedNote = notes.find((note) => note.title === title)
+
+    if(storedNote){
+        console.log(chalk.blue.bold('\n**** Reading a note from list ****\n'))
+        console.log(chalk.green.bold(storedNote.title))
+        console.log(chalk.bold(storedNote.body))
+    }
+    else{
+        console.log(chalk.red.bold('Title does not exists in list'))
+    }
+}
+
 module.exports = {
-    getNotes: getNotes,
     addNote: addNote,
-    removeNote: removeNote
+    removeNote: removeNote,
+    listNotes: listNotes,
+    readNote: readNote
 }

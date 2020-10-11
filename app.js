@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const validator = require('validator');
 const { string, demandOption } = require('yargs');
 const yargs = require('yargs');
+const { listNotes } = require('./notes.js');
 const utilities = require('./notes.js');
 const log = console.log
 
@@ -57,7 +58,7 @@ yargs.command({
     command:'list',
     describe:'Show List of Notes',
     handler(){
-        log(chalk.cyan.bold('displaying list of notes'))
+        utilities.listNotes()
     }
 })
 
@@ -66,8 +67,15 @@ yargs.command({
 yargs.command({
     command:'read',
     describe:'Reading a note',
-    handler(){
-        log(chalk.blue.bold('Reading a note from list'))
+    builder:{
+        title:{
+            describe: 'Note Title',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler(argv){
+        utilities.readNote(argv.title)
     }
 })
 
